@@ -216,13 +216,11 @@
   width: 100%;
 }
 
-.row {
-  overflow: scroll;
-}
-
 @media (max-width: 768px) {
 .row {
   margin: 20px;
+  overflow: scroll;
+
 }
 
 .userBar{
