@@ -215,3 +215,21 @@
   justify-content: center;
   width: 100%;
 }
+
+.row {
+  overflow: scroll;
+}
+
+@media (max-width: 768px) {
+.row {
+  margin: 20px;
+}
+
+.userBar{
+  flex-direction: column;
+}
+
+.previewMod a{
+  word-wrap: break-word;
+}
+}
