@@ -68,7 +68,7 @@
 
 td {
   border: 1px solid #cccccc ;
-  border-top: 1px solid #cccccc !important;
+  border-top: none !important;
 }
 
 .table_data {
@@ -80,3 +80,51 @@ td {
   margin-bottom: 20px !important
 }
 
+.row {
+  justify-content: space-between;
+}
+
+.textArea {
+  width:100%;
+  height:350px
+}
+
+.newUpdate {
+  background-color: #ece2ff;
+  padding: 15px;
+}
+
+.imgComms {
+  max-width: 50%;
+}
+
+.commentBox {
+  padding: 5px 15px;
+  background-color: #ece4ff;
+  border-top: 7px solid #a1c5ff;
+  margin-bottom: 15px;
+}
+
+.previewMod {
+  display: flex;
+  flex-direction: column
+}
+
+.userBar {
+  display: flex;
+    align-items: center;
+    background-color: #ededed;
+    padding: 15px;
+}
+
+.imgProf {
+  margin-right: 15px;
+}
+
+.content_box {
+  margin-top:15px
+}
+
+.dateTime {
+  font-size: 13px;
+}

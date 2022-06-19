@@ -171,7 +171,7 @@ class Content extends Component {
       var testremowdkp = kphist[i].this_tf_withdraw.replace(/[^0-9.]/g, '')
       var valueswdkp = parseFloat(testremowdkp)
       withdrawalskp.push(valueswdkp)
-
+    }
 
       var datelp = [];
     var depositslp = [];
@@ -208,7 +208,7 @@ class Content extends Component {
 
     }
 
-    }
+    
 
     const dataset = {
       labels: date,

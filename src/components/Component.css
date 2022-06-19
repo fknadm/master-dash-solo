@@ -1,0 +1,217 @@
+.next-steps .fa-link {
+  margin-right: 5px;
+}
+
+/* Fix for use only flexbox in content area */
+.next-steps .row {
+  margin-bottom: 0;
+}
+
+.next-steps .col-md-5 {
+  margin-bottom: 3rem;
+}
+
+.logo_sm {
+  width:20%
+}
+
+@media (max-width: 768px) {
+  .next-steps .col-md-5 {
+    margin-bottom: 0;
+  }
+
+  .rounded-circle {
+    width:40% !important
+  }
+
+  Table {
+    width:100% !important
+  }
+}
+
+.spinner {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: white;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.result-block-container .result-block {
+  opacity: 1;
+}
+
+.client_logo {
+  height:70px
+}
+
+.client_card {
+  padding:10px;
+  background-color: #f0f7ff;
+  width: 100%
+}
+
+.header_card {
+  background-color: #ffffff;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.card-content {
+  padding: 15px;
+}
+
+.selected td {
+  border: none;
+  border-top: mnone !important;
+}
+
+.selected thead {
+  border-bottom: 1px solid lightblue
+}
+
+.selected thead tr td{font-weight: 700;}
+
+.table_data {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.hero, p.lead{
+  margin-bottom: 20px !important
+}
+
+.medium {
+  background-color: #fcff00;
+  padding: 10px 15px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.high {
+  background-color: #e34040;
+  color:#ffffff;
+  padding: 10px 15px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.low {
+  background-color: #116449;
+  color:#ffffff;
+  padding: 10px 15px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.modalWin{
+  position: absolute;
+  background-color: #ffffff;
+  border:1px solid lightgray;
+  width: 50%;
+  height: 50%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    z-index: 10;
+}
+
+.modalbg {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: black;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  opacity: 40%;
+  z-index: 1;
+  
+}
+
+.formSubmit {
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+  flex-wrap: wrap;
+}
+
+.inputGroup1{
+  width:100%;
+}
+
+.titlein {
+  width:100%
+}
+
+.inputlabel {
+  font-weight:500
+}
+
+.upTitle {
+  margin-bottom: 15px !important;
+}
+
+.modalHeader {
+  text-align: center;
+}
+
+.modalRow {
+  display: flex;
+  justify-content: center;
+}
+
+.hoverme {
+  cursor: pointer;
+}
+
+
+.buttonAddTick {
+  width:100%;
+  background-color: #289671;
+  border:none;
+  padding:10px 0px;
+  border-radius:7px;
+  color:#ffffff;
+  font-weight: 500;
+}
+
+.submitbtn {
+  background-color:#116449;
+  color:white;
+  border:none;
+  padding: 10px 20px;
+  margin:10px
+}
+
+.closebtn {
+  background-color:#c73737;
+  color:white;
+  border:none;
+  padding: 10px 20px;
+  margin:10px
+}
+
+.buttonRow {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}

@@ -7,7 +7,8 @@ import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import Home from "./views/Home";
 import Profile from "./views/Profile";
-import ExternalApi from "./views/ExternalApi";
+import Api from "./views/ExternalApi";
+import CommsHome from "./views/CommsHome";
 import { useAuth0 } from "@auth0/auth0-react";
 import history from "./utils/history";
 
@@ -37,7 +38,8 @@ const App = () => {
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/profile" component={Profile} />
-            <Route path="/external-api" component={ExternalApi} />
+            <Route path="/commsthread" component={Api} />
+            <Route path="/comms" component={CommsHome} />
           </Switch>
         </Container>
         <Footer />
