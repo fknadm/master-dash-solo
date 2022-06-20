@@ -11,6 +11,8 @@ import { NavLink } from "react-router-dom";
 
 import "./Component.css"
 import Loading from "./Loading";
+import moment from "moment";
+import "moment-timezone";
 
 class Threadload extends Component {
 
@@ -108,17 +110,14 @@ class Threadload extends Component {
 
 
     const handleSend = () => {
-      var date = new Date().getDate();
-      var month = new Date().getMonth() + 1;
-      var year = new Date().getFullYear();
+      const todaydate = moment().tz("Asia/Dubai").format("MMMM Do YYYY, h:mm:ss a")
 
-      const simpleformat = date + '/' + month + '/' + year
 
       const i = this.state
       const payload = {
         "client": i.clientprop,
         "createdBy": this.props.nickname,
-        "dateCreated": simpleformat,
+        "dateCreated": todaydate,
         "dateUpdated": "",
         "last": "",
         "lead_dept": i.deptprop,

@@ -11,7 +11,8 @@ import "../App.css"
 import Threadload from "./Threadload";
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import Loading from "./Loading";
-
+import moment from "moment";
+import "moment-timezone";
 
 class Threadhist extends Component {
 
@@ -160,12 +161,14 @@ class Threadhist extends Component {
     const addComm = e => {
       e.preventDefault();
 
-      var date = new Date().getDate();
-      var month = new Date().getMonth() + 1;
-      var year = new Date().getFullYear();
+      // var date = new Date().getDate();
+      // var month = new Date().getMonth() + 1;
+      // var year = new Date().getFullYear();
 
-      const todaydate = Date().toLocaleString()
-      const simpleformat = date + '/' + month + '/' + year
+      // const todaydate = Date().toLocaleString()
+      // const simpleformat = date + '/' + month + '/' + year
+
+      const todaydate = moment().tz("Asia/Dubai").format("MMMM Do YYYY, h:mm:ss a")
 
 
       const built = {
@@ -205,7 +208,7 @@ class Threadhist extends Component {
 
         const newUpdate = {
             "last":this.props.second.nickname,
-            "dateUpdated":simpleformat,
+            "dateUpdated":todaydate,
             "status":"Pending"
         }
 
