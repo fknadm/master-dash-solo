@@ -42,10 +42,7 @@ class Threadload extends Component {
       // "body": JSON.stringify(value)
     })
       .then(response => response.json())
-      // .then(data => this.setState({
-      //   ticks: data
-      // }))
-      // .then(data => console.log(data, 'first call'))
+
       .then(data => {
 
         var opened = []
@@ -54,35 +51,29 @@ class Threadload extends Component {
         for (let i = 0; i < data.length; i++) {
           if (data[i].status === 'New' | data[i].status === 'Pending') {
             // this.setState({ open: data[i] });
-            console.log(data[i],'FILTERED')
             opened.push(data[i])
            
 
           }
         }
-        console.log(opened,'TRANSFERRED TO OPEN________________')
       
 
         for (let i = 0; i < data.length; i++) {
           if (data[i].status === 'Closed') {
             // this.setState({ closed: datas[i] });
-            console.log(data[i],'CLOSE FILTERED')
             closedd.push(data[i])
           }
         }
 
-        console.log(closedd,'TRANSFERRED TO CLOSED________________')
 
         this.setState({closed:closedd})
         this.setState({open:opened})
       })
 
-    console.log(this.props, 'PROPS!')
 
 
     const datas = this.state.ticks
 
-    console.log(datas, '_________FIRST_________')
 
 
 
@@ -102,7 +93,6 @@ class Threadload extends Component {
       }
     }
 
-    console.log(this.state.show)
 
     const handleClose = () => {
       this.setState({ show: false })
@@ -127,7 +117,6 @@ class Threadload extends Component {
 
       }
 
-      console.log(payload)
 
 
       fetch('https://us-central1-bp-serverless.cloudfunctions.net/tick', {
@@ -138,8 +127,6 @@ class Threadload extends Component {
         "body": JSON.stringify(payload)
       })
         .then(response => response.json())
-        .then(data => console.log(data, 'success'))
-
       setTimeout(() => {
         window.location.reload(false)
       }, 1000);
@@ -185,8 +172,9 @@ class Threadload extends Component {
     var x = this.state
     const newdatas = this.state.open
     const closedatas = this.state.closed
-    console.log(newdatas, 'filtered')
-    console.log(newdatas, 'n', closedatas, 'c')
+
+
+    
 
     return (
       <div className="next-steps my-5">
@@ -246,7 +234,6 @@ class Threadload extends Component {
                 </thead>
                 <tbody>
                   {newdatas ? newdatas.map(newdatas => {
-                    console.log(newdatas)
                     return (
 
                       <tr key={newdatas.id}>
@@ -305,7 +292,6 @@ class Threadload extends Component {
                 </thead>
                 <tbody>
                   {closedatas ? closedatas.map(closedatas => {
-                    console.log(closedatas)
                     return (
 
                       <tr key={closedatas.id}>
