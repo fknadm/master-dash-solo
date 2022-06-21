@@ -6,13 +6,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import contentData from "../utils/contentData";
 import { Chart as ChartJS } from 'chart.js/auto'
 import { Chart, Line } from 'react-chartjs-2'
-
+import emailjs from '@emailjs/browser';
 import "../App.css"
 import Threadload from "./Threadload";
 import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import Loading from "./Loading";
 import moment from "moment";
 import "moment-timezone";
+
+import sgMail from '@sendgrid/mail'
+
 
 class Threadhist extends Component {
 
@@ -29,7 +32,8 @@ class Threadhist extends Component {
       counter: 1,
       newUpdate: [],
       propsin: [],
-      statusprop: []
+      statusprop: [],
+      userdata: []
     };
   }
 
@@ -40,7 +44,7 @@ class Threadhist extends Component {
 
     const ext = this.props.first.newdatas
     const exb = this.props.first.closedatas
-    // this.setState({ statusprop: this.props.first.status })
+    this.setState({ userdata: this.props.second })
 
     if (ext) {
       this.setState({ propsin: this.props.first.newdatas })
@@ -124,10 +128,56 @@ class Threadhist extends Component {
 
     };
 
+    const sendEmail = () => {
+
+      console.log('_________########INITATING SEND #############_____________')
+      // const a_c = this.state.fetchcomms.map(i => ({"email":i.email,"name":i.addedBy}))
+      // const uac = [...new Set(a_c)]
+      const a_c = this.state.fetchcomms.map(i => (i.email))
+        const uac = [...new Set(a_c)]
+
+       console.log(uac)
+
+       const vars = {
+        ticket_name : this.state.propsin.title,
+        from_name :  this.props.second.nickname,
+        to_name : this.state.propsin.createdBy,
+        message : this.state.newUpdate,
+        reply_to : this.state.propsin.email,
+        to_cc : uac
+        
+       }
+       const ticket_name = vars.ticket_name
+       const from_name = vars.from_name
+       const to_name = vars.to_name
+       const message = vars.message
+       const reply_to = vars.reply_to
+       const to_cc = vars.to_cc
+
+        emailjs.send(
+          'gmail',
+          'template_1txtxxb',
+          { ticket_name, from_name, to_name, message, reply_to,  to_cc },
+          'l8xcGw2X0b-zYmsNZ'
+        )
+        .then((result) => {
+          console.log(result.text)
+          
+          setTimeout(() => {
+            window.location.reload(false)
+          }, 100);;
+      }, (error) => {
+          console.log(error.text);
+      });
+
+    
+
+  }
+
 
     const reloadMains = async () => {
       await fetch(
-        `https://us-central1-bp-serverless.cloudfunctions.net/tick/${this.props.first.id}`,
+        `https://us-central1-bp-serverless.cloudfunctions.net/tick/${this.state.propsin.id}`,
         {
           method: 'GET',
           headers: {
@@ -164,7 +214,14 @@ class Threadhist extends Component {
         "att": this.state.urlPayload,
         "dateCreated": todaydate,
         "textContent": this.state.newUpdate,
-        "forId": this.state.propsin.id
+        "forId": this.state.propsin.id,
+        "email": this.props.second.email
+      }
+
+      const newUpdate = {
+        "last": this.props.second.nickname,
+        "dateUpdated": todaydate,
+        "status": "Pending"
       }
 
 
@@ -181,22 +238,11 @@ class Threadhist extends Component {
         .then((response) => response.json())
         .then((result) => {
           this.setState({ statusprop: 'Pending' })
-          // anotherApi()
-          reloadMains()
-          setTimeout(() => {
-            window.location.reload(false)
-          }, 1000);
-
         })
         .catch((error) => {
           console.error('Error:', error);
         });
 
-      const newUpdate = {
-        "last": this.props.second.nickname,
-        "dateUpdated": todaydate,
-        "status": "Pending"
-      }
 
       fetch(
         `https://us-central1-bp-serverless.cloudfunctions.net/tick/${this.state.propsin.id}`,
@@ -210,15 +256,16 @@ class Threadhist extends Component {
       )
         .then((response) => response.json())
         .then((result) => {
-
-          window.location.reload(false)
-
+          console.log(result, 'LAST CALL_________________________________')
         })
         .catch((error) => {
           console.error('Error:', error);
         });
-      // window.location.reload(false)
-
+        
+       
+        
+        reloadMains()
+        sendEmail();
     }
 
 
@@ -260,6 +307,8 @@ class Threadhist extends Component {
 
     const fdatas = this.state.fetchcomms
     const sorted = fdatas.sort((a, b) => a.dateCreated.localeCompare(b.dateCreated))
+
+    console.log(sorted)
 
 
     const list1 = sorted.map(sorted => {

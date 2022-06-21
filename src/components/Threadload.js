@@ -113,7 +113,8 @@ class Threadload extends Component {
         "lead_dept": i.deptprop,
         "status": "New",
         "title": i.titleprop,
-        "urgency": i.urgencyprop
+        "urgency": i.urgencyprop,
+        "email":this.props.email
 
       }
 
@@ -170,8 +171,11 @@ class Threadload extends Component {
 
     const showing = this.state.show
     var x = this.state
-    const newdatas = this.state.open
-    const closedatas = this.state.closed
+
+    const opendatas = this.state.open
+    const closeddatas = this.state.closed
+    const newdatas = opendatas.sort((a, b) => b.dateUpdated.localeCompare(a.dateUpdated))
+    const closedatas = closeddatas.sort((a, b) => b.dateUpdated.localeCompare(a.dateUpdated))
 
 
     
@@ -236,7 +240,7 @@ class Threadload extends Component {
                   {newdatas ? newdatas.map(newdatas => {
                     return (
 
-                      <tr key={newdatas.id}>
+                      <tr key={newdatas.id} >
 
                         <td>{newdatas.urgency == 'High' ? <p className="high">{newdatas.urgency}</p>
                           : newdatas.urgency == 'Medium' ? <p className="medium">{newdatas.urgency}</p>
@@ -294,7 +298,7 @@ class Threadload extends Component {
                   {closedatas ? closedatas.map(closedatas => {
                     return (
 
-                      <tr key={closedatas.id}>
+                      <tr key={closedatas.id} style={{opacity: "0.5"}}>
 
                         <td>{closedatas.urgency == 'High' ? <p className="high">{closedatas.urgency}</p>
                           : closedatas.urgency == 'Medium' ? <p className="medium">{closedatas.urgency}</p>
