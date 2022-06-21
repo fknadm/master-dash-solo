@@ -163,9 +163,12 @@ class Threadhist extends Component {
         .then((result) => {
           console.log(result.text)
           
-          setTimeout(() => {
+          // setTimeout(() => {
+          //   window.location.reload(false)
+          // }, 100);
+     
             window.location.reload(false)
-          }, 100);;
+    
       }, (error) => {
           console.log(error.text);
       });
