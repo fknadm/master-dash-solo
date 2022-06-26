@@ -19,7 +19,6 @@ const Api = () => {
 let location = useLocation()
   const { user } = useAuth0();
 
-console.log(location.state)
 
   const propa = {
     "datap": "Check & edit all service request tickets",
@@ -32,7 +31,6 @@ const propb = {
   "second":user
 }
 
-console.log(propb)
   
   return(
   

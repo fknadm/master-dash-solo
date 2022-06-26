@@ -13,8 +13,7 @@ import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import Loading from "./Loading";
 import moment from "moment";
 import "moment-timezone";
-
-import sgMail from '@sendgrid/mail'
+import ReactTextareaAutocomplete from "@webscopeio/react-textarea-autocomplete";
 
 
 class Threadhist extends Component {
@@ -33,7 +32,10 @@ class Threadhist extends Component {
       newUpdate: [],
       propsin: [],
       statusprop: [],
-      userdata: []
+      userdata: [],
+      token: [],
+      allusers: [],
+      tagged:[]
     };
   }
 
@@ -41,6 +43,43 @@ class Threadhist extends Component {
 
 
   componentDidMount() {
+
+    const fortoken = {
+      "client_id": "krZcxtfo0GVAVK0pGRmGuRbVBXR7GcsF",
+      "client_secret": "e35pZoX4wk0TRa7ls2VihAuMAK4ZQbPdw8At_HpCe0_cEtwkPKpHFqq8NeSmunHf",
+      "audience": "https://dev-qvsd291f.eu.auth0.com/api/v2/",
+      "grant_type": "client_credentials"
+    }
+
+
+    fetch('https://dev-qvsd291f.eu.auth0.com/oauth/token', {
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "POST",
+      body: JSON.stringify(fortoken)
+
+    })
+      .then(response => response.json())
+      .then(data => {
+        fetch('https://dev-qvsd291f.eu.auth0.com/api/v2/users', {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${data.access_token}`
+          },
+          method: "GET",
+
+        })
+          .then(response => response.json())
+          .then(data => this.setState({
+            allusers: data
+          })).catch(err => {
+            console.log(err)
+          })
+
+      }).catch(err => {
+        console.log(err)
+      })
 
     const ext = this.props.first.newdatas
     const exb = this.props.first.closedatas
@@ -103,15 +142,11 @@ class Threadhist extends Component {
 
 
 
-
-
-
   }
 
 
 
   render() {
-
     const handleOnChange = e => {
       const file = e.target.files[0]
       this.setState({ selectedFile: file })
@@ -120,62 +155,52 @@ class Threadhist extends Component {
 
     };
 
-    const handleText = e => {
-
-      this.setState({ newUpdate: e.target.value })
-
-
-
-    };
+  
 
     const sendEmail = () => {
 
-      console.log('_________########INITATING SEND #############_____________')
       // const a_c = this.state.fetchcomms.map(i => ({"email":i.email,"name":i.addedBy}))
       // const uac = [...new Set(a_c)]
       const a_c = this.state.fetchcomms.map(i => (i.email))
-        const uac = [...new Set(a_c)]
+      const uac = [...new Set(a_c)].concat(this.state.tagged)  
 
-       console.log(uac)
 
-       const vars = {
-        ticket_name : this.state.propsin.title,
-        from_name :  this.props.second.nickname,
-        to_name : this.state.propsin.createdBy,
-        message : this.state.newUpdate,
-        reply_to : this.state.propsin.email,
-        to_cc : uac
-        
-       }
-       const ticket_name = vars.ticket_name
-       const from_name = vars.from_name
-       const to_name = vars.to_name
-       const message = vars.message
-       const reply_to = vars.reply_to
-       const to_cc = vars.to_cc
+      const vars = {
+        ticket_name: this.state.propsin.title,
+        from_name: this.props.second.nickname,
+        to_name: this.state.propsin.createdBy,
+        message: this.state.newUpdate,
+        reply_to: this.state.propsin.email,
+        to_cc: uac
 
-        emailjs.send(
-          'gmail',
-          'template_1txtxxb',
-          { ticket_name, from_name, to_name, message, reply_to,  to_cc },
-          'l8xcGw2X0b-zYmsNZ'
-        )
+      }
+      const ticket_name = vars.ticket_name
+      const from_name = vars.from_name
+      const to_name = vars.to_name
+      const message = vars.message
+      const reply_to = vars.reply_to
+      const to_cc = vars.to_cc
+
+      emailjs.send(
+        'gmail',
+        'template_1txtxxb',
+        { ticket_name, from_name, to_name, message, reply_to, to_cc },
+        'l8xcGw2X0b-zYmsNZ'
+      )
         .then((result) => {
-          console.log(result.text)
-          
+
           // setTimeout(() => {
           //   window.location.reload(false)
           // }, 100);
-     
-            window.location.reload(false)
-    
-      }, (error) => {
-          console.log(error.text);
-      });
 
-    
+          window.location.reload(false)
 
-  }
+        }, (error) => {
+        });
+
+
+
+    }
 
 
     const reloadMains = async () => {
@@ -259,16 +284,15 @@ class Threadhist extends Component {
       )
         .then((response) => response.json())
         .then((result) => {
-          console.log(result, 'LAST CALL_________________________________')
         })
         .catch((error) => {
           console.error('Error:', error);
         });
-        
-       
-        
-        reloadMains()
-        sendEmail();
+
+
+
+      reloadMains()
+      sendEmail();
     }
 
 
@@ -311,7 +335,7 @@ class Threadhist extends Component {
     const fdatas = this.state.fetchcomms
     const sorted = fdatas.sort((a, b) => a.dateCreated.localeCompare(b.dateCreated))
 
-    console.log(sorted)
+    const newlist = this.state.allusers.map(item => ({ "email": item.email, "name": item.nickname }))
 
 
     const list1 = sorted.map(sorted => {
@@ -379,9 +403,33 @@ class Threadhist extends Component {
 
     }
 
+    const removeTags = () => {
+      const up = this.state.newUpdate.toString()
+      const upup = up.replace(/(@\S+)/gi,"")
+      const arrup = []
+
+      this.setState({
+        newUpdate: upup
+      })
+      this.setState({
+        tagged: []
+      })
+    }
+
+    const handleText = e => {
+      this.setState({ newUpdate: e.target.value })
+    };
+
+    const autoHandler = (s) => {
+      this.setState({
+        tagged: this.state.tagged.concat(s.target.id)
+
+      })
+    }
+
 
     const st = this.state.propsin
-
+    const Item = ({ entity: { name, email } }) => <div style={{color:"#6186ff"}} id={email} onClick={(e) => autoHandler(e)}>{`${name}`}</div>;
 
     return (
 
@@ -412,9 +460,25 @@ class Threadhist extends Component {
         </div>
         <div className="newUpdate">
           <h4>Add new update</h4>
-          <form>
-            <textarea className="textArea" onChange={handleText}></textarea>
-          </form>
+          <button onClick={removeTags} style={{backgroundColor:'red',color:'white'}}> Clear all tags</button>
+
+          <div class="container">
+            <ReactTextareaAutocomplete
+              className="my-textarea textArea"
+              onChange={handleText}
+              value={this.state.newUpdate}
+              loadingComponent={() => <span>Loading</span>}
+              trigger={{
+                "@": {
+                  dataProvider: token => {
+                    return newlist.map(({name,email}) => ({name,email}))
+                  },
+                  component: Item,
+                  output: (item, trigger) => trigger+item.name
+                }
+              }}
+            />
+          </div>
 
 
           {[...Array(this.state.counter)].map((e, i) =>
@@ -427,7 +491,6 @@ class Threadhist extends Component {
                 <button type="submit">Add Attachment</button>
               </form>
             </div>)}
-
           <button onClick={addComm} className="submitFinal">Submit Update</button>
         </div>
 

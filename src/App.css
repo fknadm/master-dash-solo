@@ -128,3 +128,26 @@ td {
 .dateTime {
   font-size: 13px;
 }
+
+.rta {
+position: relative;
+font-size: 18px;
+width: 100%;
+height: 100%;
+}
+
+.rta__autocomplete {
+  position: absolute;
+  display: block;
+  -webkit-box-shadow: 7px 7px 5px -4px rgba(0,0,0,0.27);
+-moz-box-shadow: 7px 7px 5px -4px rgba(0,0,0,0.27);
+box-shadow: 7px 7px 5px -4px rgba(0,0,0,0.27);
+background-color:#ffffff
+}
+
+.rta__list {
+  margin: 0;
+  list-style-type: none;
+  padding: 0px 10px;
+}
+
