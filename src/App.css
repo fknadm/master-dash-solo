@@ -151,3 +151,7 @@ background-color:#ffffff
   padding: 0px 10px;
 }
 
+.hero {
+  max-width: 800px !important;
+}
+
