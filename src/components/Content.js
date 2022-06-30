@@ -320,8 +320,6 @@ class Content extends Component {
 
                 const sum = Number(testint) - Number(testint2)
 
-                console.log(sum, 'sum')
-
                 let i = sum.length
 
                 return (
@@ -416,7 +414,6 @@ class Content extends Component {
 
                 const sum = Number(testint) - Number(testint2)
 
-                console.log(sum, 'sum')
 
                 let i = sum.length
 
@@ -512,7 +509,6 @@ class Content extends Component {
 
                 const sum = Number(testint) - Number(testint2)
 
-                console.log(sum, 'sum')
 
                 // let i = sum.length
 
@@ -608,7 +604,6 @@ class Content extends Component {
 
                 const sum = Number(testint) - Number(testint2)
 
-                console.log(sum, 'sum')
 
                 // let i = sum.length
 
