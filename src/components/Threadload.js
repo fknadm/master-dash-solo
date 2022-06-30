@@ -28,7 +28,8 @@ class Threadload extends Component {
       deptprop: "Tech",
       urgencyprop: "High",
       open: [],
-      closed: []
+      closed: [],
+      isSent: false
 
     };
   }
@@ -100,6 +101,9 @@ class Threadload extends Component {
 
 
     const handleSend = () => {
+      this.setState({
+        isSent:true
+      })
       const todaydate = moment().tz("Asia/Dubai").format("MMMM Do YYYY, h:mm:ss a")
 
 
@@ -208,7 +212,7 @@ class Threadload extends Component {
                     <select value={x.urgencyprop} onChange={handleUrg}><option value="Low">Low</option><option value="Medium">Medium</option><option value="High">High</option></select></div>
                 </form>
                 <div className="buttonRow">
-                  <button className="submitbtn" onClick={handleSend}>Submit New Ticket</button>
+                  <button className="submitbtn" onClick={this.state.isSent === false ? handleSend : ''}>Submit New Ticket</button>
                   <button className="closebtn" onClick={handleClose}>Close Ticket Window</button>
                 </div>
               </div>

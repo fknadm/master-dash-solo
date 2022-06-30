@@ -35,7 +35,8 @@ class Threadhist extends Component {
       userdata: [],
       token: [],
       allusers: [],
-      tagged:[]
+      tagged:[],
+      isClicked:false
     };
   }
 
@@ -188,12 +189,13 @@ class Threadhist extends Component {
         'l8xcGw2X0b-zYmsNZ'
       )
         .then((result) => {
+          console.log(this.state.isClicked,'ISCLICKED')
 
           // setTimeout(() => {
           //   window.location.reload(false)
           // }, 100);
 
-          window.location.reload(false)
+          // window.location.reload(false)
 
         }, (error) => {
         });
@@ -226,7 +228,9 @@ class Threadhist extends Component {
 
     const addComm = e => {
       e.preventDefault();
-
+      this.setState({
+        isClicked:true
+      })
       // var date = new Date().getDate();
       // var month = new Date().getMonth() + 1;
       // var year = new Date().getFullYear();
@@ -491,7 +495,7 @@ class Threadhist extends Component {
                 <button type="submit">Add Attachment</button>
               </form>
             </div>)}
-          <button onClick={addComm} className="submitFinal">Submit Update</button>
+          <button onClick={this.state.isClicked === false ? addComm : ''} className="submitFinal">Submit Update</button>
         </div>
 
 
