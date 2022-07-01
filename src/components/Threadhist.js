@@ -195,7 +195,7 @@ class Threadhist extends Component {
           //   window.location.reload(false)
           // }, 100);
 
-          // window.location.reload(false)
+          window.location.reload(false)
 
         }, (error) => {
         });
